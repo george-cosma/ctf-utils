@@ -1,0 +1,51 @@
+#!/bin/bash
+
+case $1 in
+    "create")
+        case $2 in
+            "ctf")
+                if [ -n "$3" ]; then
+                    mkdir "$3"
+                    cd "$3" || exit
+                    mkdir "binary" "web" "rev" "stegno" "misc" "crypto"
+                else
+                    echo "Please provide a name for the CTF directory"
+                fi
+                ;;
+            "challenge")
+                if [ -n "$3" ]; then
+                    mkdir "$3"
+                    cd "$3" || exit
+                    cp ~/.ctf/default/README.md README.md
+                    sed -i "s/<name>/$3/g" README.md
+                else
+                    echo "Please provide a name for the challenge directory"
+                fi
+                ;;
+            *)
+                echo "Unknown subcommand: $2"
+                ;;
+        esac
+        ;;
+    "done")
+        if [ -n "$2" ]; then
+            if [[ "$2" = /* ]]; then
+                # Absolute path
+                dir_name="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"
+                mv "$dir_name" "$(dirname "$dir_name")/done_$(basename "$dir_name")"
+            else
+                # Relative path
+                dir_name="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"
+                mv "$dir_name" "$(dirname "$dir_name")/done_$(basename "$dir_name")"
+            fi
+        else
+            echo "Please provide a name or path for the challenge to mark as done"
+        fi
+        ;;
+    *)
+        echo "Usage:"
+        echo "  pwn create ctf <name>       Creates a CTF directory with subdirectories"
+        echo "  pwn create challenge <name> Creates a challenge directory with a README.md file"
+        echo "  pwn done <name>             Renames a challenge directory as done_<name>"
+        ;;
+esac
