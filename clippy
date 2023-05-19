@@ -44,8 +44,8 @@ case $1 in
         ;;
     *)
         echo "Usage:"
-        echo "  pwn create ctf <name>       Creates a CTF directory with subdirectories"
-        echo "  pwn create challenge <name> Creates a challenge directory with a README.md file"
-        echo "  pwn done <name>             Renames a challenge directory as done_<name>"
+        echo "  clippy create ctf <name>       Creates a CTF directory with subdirectories"
+        echo "  clippy create challenge <name> Creates a challenge directory with a README.md file"
+        echo "  clippy done <name>             Renames a challenge directory as done_<name>"
         ;;
 esac
